@@ -84,6 +84,8 @@ fun TopMenu(onClickMenu: () -> Unit, onClickSearch: () -> Unit, onClickCart: () 
                         onClickCart = { onClickCart() },"Android"
                     )
                 }
+
+
                 Spacer(modifier = Modifier.width(20.dp))
                 Column(
                     Modifier.weight(1f)
