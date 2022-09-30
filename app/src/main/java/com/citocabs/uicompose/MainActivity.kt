@@ -61,7 +61,8 @@ fun TopMenu(onClickMenu: () -> Unit, onClickSearch: () -> Unit, onClickCart: () 
                         onClickSearch = { onClickSearch() },
                         onClickCart = { onClickCart() },
                         "Android",
-                        showMenuIcon = false
+                        showMenuIcon = false,
+                        showCartIcon = false
                     )
                 }
                 Spacer(modifier = Modifier.width(20.dp))
@@ -109,7 +110,8 @@ fun ToolbarView(
     onClickCart: () -> Unit,
     title: String,
     showMenuIcon: Boolean = false,
-    showSearchIcon: Boolean = true
+    showSearchIcon: Boolean = true,
+    showCartIcon: Boolean = true
 ) {
 
     Card() {
@@ -158,7 +160,7 @@ fun ToolbarView(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .constrainAs(searchIcon) {
-                            end.linkTo(cartIcon.start, 20.dp)
+                            end.linkTo(if(showCartIcon)cartIcon.start else parent.end, 10.dp)
                             top.linkTo(parent.top)
                             bottom.linkTo(parent.bottom)
                         }
@@ -170,40 +172,43 @@ fun ToolbarView(
                 )
             }
 
-            Image(
-                painter = painterResource(R.drawable.ic_baseline_shopping_cart_24),
-                contentDescription = "Hamburger",
-                colorFilter = ColorFilter.tint(colorResource(id = R.color.light_red)),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .constrainAs(cartIcon) {
-                        end.linkTo(parent.end, 10.dp)
-                        top.linkTo(parent.top)
-                        bottom.linkTo(parent.bottom)
-                    }.clickable {
-                        onClickCart()
-                    }
-                    .width(24.dp)
-                    .height(24.dp)
-            )
+            if(showCartIcon){
+                Image(
+                    painter = painterResource(R.drawable.ic_baseline_shopping_cart_24),
+                    contentDescription = "Hamburger",
+                    colorFilter = ColorFilter.tint(colorResource(id = R.color.light_red)),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .constrainAs(cartIcon) {
+                            end.linkTo(parent.end, 10.dp)
+                            top.linkTo(parent.top)
+                            bottom.linkTo(parent.bottom)
+                        }.clickable {
+                            onClickCart()
+                        }
+                        .width(24.dp)
+                        .height(24.dp)
+                )
 
-            Text(
-                modifier = Modifier
-                    .constrainAs(badgeIcon) {
-                        end.linkTo(cartIcon.end, (-1).dp)
-                        top.linkTo(parent.top)
-                    }
-                    .drawBehind {
-                        drawCircle(
-                            color = Color.Red,
-                            radius = this.size.maxDimension / 1.5F
+                Text(
+                    modifier = Modifier
+                        .constrainAs(badgeIcon) {
+                            end.linkTo(cartIcon.end, (-1).dp)
+                            top.linkTo(parent.top)
+                        }
+                        .drawBehind {
+                            drawCircle(
+                                color = Color.Red,
+                                radius = this.size.maxDimension / 1.5F
 
-                        )
-                    },
-                text = "14",
-                fontSize = 8.sp,
-                color = Color.White
-            )
+                            )
+                        },
+                    text = "14",
+                    fontSize = 8.sp,
+                    color = Color.White
+                )
+
+            }
 
         }
     }
