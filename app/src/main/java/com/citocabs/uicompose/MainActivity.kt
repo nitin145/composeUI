@@ -18,8 +18,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -54,6 +56,7 @@ fun TopMenu(onClickMenu: () -> Unit, onClickSearch: () -> Unit, onClickCart: () 
                 Column(
                     Modifier
                         .weight(1f)
+                        .testTag("FirstColumn")
                         .wrapContentHeight()
                 ) {
                     ToolbarView(
@@ -67,7 +70,7 @@ fun TopMenu(onClickMenu: () -> Unit, onClickSearch: () -> Unit, onClickCart: () 
                 }
                 Spacer(modifier = Modifier.width(20.dp))
                 Column(
-                    Modifier.weight(1f)
+                    Modifier.weight(1f).testTag("SecondColumn")
                 ) {
                     ToolbarView(onClickMenu = { onClickMenu() },
                         onClickSearch = { onClickSearch() },
@@ -78,7 +81,7 @@ fun TopMenu(onClickMenu: () -> Unit, onClickSearch: () -> Unit, onClickCart: () 
             Spacer(modifier = Modifier.height(20.dp))
             Row {
                 Column(
-                    Modifier.weight(1f)
+                    Modifier.weight(1f).testTag("ThirdColumn")
                 ) {
                     ToolbarView(onClickMenu = { onClickMenu() },
                         onClickSearch = { onClickSearch() },
@@ -89,7 +92,7 @@ fun TopMenu(onClickMenu: () -> Unit, onClickSearch: () -> Unit, onClickCart: () 
 
                 Spacer(modifier = Modifier.width(20.dp))
                 Column(
-                    Modifier.weight(1f)
+                    Modifier.weight(1f).testTag("FourthColumn")
                 ) {
                     ToolbarView(onClickMenu = { onClickMenu() },
                         onClickSearch = { onClickSearch() },
@@ -126,9 +129,10 @@ fun ToolbarView(
             if (showMenuIcon) {
                 Image(
                     painter = painterResource(R.drawable.ic_baseline_dehaze_24),
-                    contentDescription = "Hamburger",
+                    contentDescription = stringResource(R.string.hambuger),
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
+                    modifier = Modifier.testTag(stringResource(R.string.hambuger))
+
                         .constrainAs(hamburgerIcon) {
                             start.linkTo(parent.start, 10.dp)
                             top.linkTo(parent.top)
@@ -142,7 +146,7 @@ fun ToolbarView(
                 )
             }
             Text(text = title,
-                modifier = Modifier
+                modifier = Modifier.testTag("title")
                     .padding(start = 10.dp)
                     .constrainAs(titleText) {
                         start.linkTo(hamburgerIcon.end)
@@ -156,9 +160,9 @@ fun ToolbarView(
                 Image(
                     painter = painterResource(R.drawable.ic_baseline_search_24),
                     colorFilter = ColorFilter.tint(colorResource(id = R.color.light_red)),
-                    contentDescription = "Hamburger",
+                    contentDescription = "Search",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
+                    modifier = Modifier.testTag("Search")
                         .constrainAs(searchIcon) {
                             end.linkTo(if(showCartIcon)cartIcon.start else parent.end, 10.dp)
                             top.linkTo(parent.top)
@@ -178,7 +182,7 @@ fun ToolbarView(
                     contentDescription = "Hamburger",
                     colorFilter = ColorFilter.tint(colorResource(id = R.color.light_red)),
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
+                    modifier = Modifier.testTag("Cart")
                         .constrainAs(cartIcon) {
                             end.linkTo(parent.end, 10.dp)
                             top.linkTo(parent.top)
